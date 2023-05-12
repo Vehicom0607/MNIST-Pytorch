@@ -58,7 +58,10 @@ class NN(nn.Module):
         nn.init.kaiming_uniform_(self.layer_1.weight, nonlinearity="sigmoid")
         self.layer_2 = nn.Linear(hidden_dim, output_dim)
 
+        self.dropout = nn.Dropout(0.2)
+
     def forward(self, x):
+        x = self.dropout(x)
         x = self.layer_1(x)
         x = torch.nn.functional.relu(x)  # ReLU seems to overfit less than sigmoid
         x = self.layer_2(x)
